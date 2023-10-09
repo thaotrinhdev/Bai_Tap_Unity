@@ -63,7 +63,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Damage()
     {
-        currentHealth += 20;
+        Debug.Log("moi di qua 1 cai");
+        currentHealth -= 20;
         damageCount += 1;
         health.Health(currentHealth);
     }
