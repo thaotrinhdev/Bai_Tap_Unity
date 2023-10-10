@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Loading : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class Loading : MonoBehaviour
     public void Play()
     {
         view.SetActive(false);
+        Application.LoadLevel(1);
+    }
+    public void Close()
+    {
+        view.SetActive(true);
 
     }
 }

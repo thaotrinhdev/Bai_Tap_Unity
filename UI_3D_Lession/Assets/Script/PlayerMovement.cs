@@ -10,20 +10,20 @@ public class PlayerMovement : MonoBehaviour
 {
     // Gas
     public TMP_Text text;
-    public int scoreCount = 0;
+    public float currentGas = 100;
 
     //Km
     public TMP_Text textDamage;
     public int damageCount = 0;
 
+    public TMP_Text textSpeed;
+    public float speed = 0;
     public Joystick joystick;
     public Health_Bar health;
     public float currentHealth;
     public float maxHealth = 100;
 
     private Rigidbody rb;
-    public float speed;
-    public float currentGas = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +37,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Player_Move();
         currentGas -= Time.deltaTime;
-        text.text = scoreCount.ToString();
+        text.text = currentGas.ToString();
         textDamage.text = damageCount.ToString();
+        textSpeed.text = speed + "km/h";
 
         if (currentHealth <= 0 || currentGas <= 0)
         {
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
+        StartCoroutine((string)CalculateSpeed());
     }
     private void Player_Move()
     {
@@ -53,13 +55,17 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime * movey);
         //Vector3.up: Change y
         transform.Rotate(Vector3.up * movex * 70.0f * Time.deltaTime);
-
-
     }
+    IEnumerable CalculateSpeed()
+
+    {
+       Vector3 lastPosition = transform.position;
+        yield return new WaitForFixedUpdate();
+        speed = (lastPosition - transform.position).magnitude/Time.deltaTime;
+    }    
     public void FillGas()
     {
-        currentGas += 20;
-        scoreCount += 1;
+        currentGas+= 20;
     }
     public void Damage()
     {
