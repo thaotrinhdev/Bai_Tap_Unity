@@ -70,7 +70,6 @@ public class playerMove : MonoBehaviour
         {
             animator.SetBool("isFalling", true);
             animator.SetBool("isGrounded", true);
-            animator.SetBool("isJumping", false);
         }
     }
 
